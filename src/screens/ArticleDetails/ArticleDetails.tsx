@@ -14,7 +14,12 @@ export default function ArticleDetails() {
     useRoute<RouteProp<MainstackParamList, ScreenNames.ArticleDetails>>();
   const { article } = params ?? {};
   const { content, title, urlToImage } = article ?? {};
-   const {addToFavList} = useFavArticlesStore();
+  //const { addToFavList } = useFavArticlesStore();
+
+  const { favList, addToFavList } = useFavArticlesStore();
+  const isFavorited = article?.url
+    ? favList.some(a => a.url === article.url)
+    : false;
   return (
     <SafeAreaView style={styles.safeContainer}>
       <ScrollView style={styles.container}>
@@ -29,11 +34,15 @@ export default function ArticleDetails() {
           <Text style={styles.description}>{content}</Text>
         </View>
       </ScrollView>
-       <TouchableOpacity
-        style={styles.addTofavBtn}
+      <TouchableOpacity
+        style={[
+          styles.addTofavBtn,
+          isFavorited && styles.removeFavBtn, // optional different style
+        ]}
         onPress={() => {
-          addToFavList(article);
-        }}>
+          if (article) addToFavList(article);
+        }}
+      >
         <Text style={styles.addToFavText}>Add To Fav</Text>
       </TouchableOpacity>
     </SafeAreaView>

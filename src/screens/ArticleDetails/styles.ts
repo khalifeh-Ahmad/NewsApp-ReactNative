@@ -47,6 +47,9 @@ const styles = StyleSheet.create({
     color: '#000',
     fontFamily: fonts.CairoBold,
   },
+  removeFavBtn: {
+    backgroundColor: '#ccc',
+  },
 });
 
 export default styles;
