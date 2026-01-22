@@ -1,8 +1,8 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import ScreenNames from '../screenNames';
+import ScreenNames from '../ScreenNames';
 import FavoriteArticles from '../../screens/FavArticles/FavoriteArticles';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import StackNames from '../stackNames';
+import StackNames from '../StackNames';
 import HomeStack from '../Stacks/Home.stack';
 
 const MyTabs = createBottomTabNavigator();

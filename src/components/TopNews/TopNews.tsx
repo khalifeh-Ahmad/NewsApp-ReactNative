@@ -5,7 +5,8 @@ import { ArticleType } from '../../utils/types/articleType';
 import { getData } from '../../utils/helpers/apiService';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { MainstackParamList } from '../../navigation/MainStack';
-import ScreenNames from '../../navigation/screenNames';
+import ScreenNames from '../../navigation/ScreenNames';
+import StackNames from '../../navigation/StackNames';
 
 export default function TopNews() {
   const [articles, setArticles] = useState<ArticleType[]>([]);
@@ -31,8 +32,9 @@ export default function TopNews() {
       });
   }
   function articleDetails(article: ArticleType) {
-    navigate(ScreenNames.ArticleDetails, {
-      article,
+    navigate(StackNames.SharedStack, {
+      screen: ScreenNames.ArticleDetails,
+      params: { article },
     });
   }
   function renderNews(item: ArticleType) {

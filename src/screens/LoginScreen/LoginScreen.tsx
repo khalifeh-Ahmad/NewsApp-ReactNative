@@ -1,7 +1,7 @@
 import { View, Text, TouchableOpacity } from 'react-native';
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
-import StackNames from '../../navigation/stackNames';
+import StackNames from '../../navigation/StackNames';
 
 export default function LoginScreen() {
   const { navigate } = useNavigation();

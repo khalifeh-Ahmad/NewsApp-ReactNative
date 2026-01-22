@@ -10,7 +10,7 @@ import styles from './styles';
 import { ArticleType } from '../../utils/types/articleType';
 import { getData } from '../../utils/helpers/apiService';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
-import ScreenNames from '../../navigation/screenNames';
+import ScreenNames from '../../navigation/ScreenNames';
 import { MainstackParamList } from '../../navigation/MainStack';
 import { cleanHtml } from '../../utils/helpers/cleanHtml';
 

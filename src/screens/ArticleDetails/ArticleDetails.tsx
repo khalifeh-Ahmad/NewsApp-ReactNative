@@ -3,7 +3,7 @@ import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { MainstackParamList } from '../../navigation/MainStack';
-import ScreenNames from '../../navigation/screenNames';
+import ScreenNames from '../../navigation/ScreenNames';
 import styles from './styles';
 import Icon from 'react-native-vector-icons/AntDesign';
 
