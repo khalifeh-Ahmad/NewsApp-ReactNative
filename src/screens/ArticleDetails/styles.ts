@@ -34,6 +34,19 @@ const styles = StyleSheet.create({
   description: {
     fontFamily: fonts.CairoLigh,
   },
+  addTofavBtn: {
+    backgroundColor: 'gold',
+    padding: 10,
+    marginTop: 10,
+    marginBottom: 20,
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  addToFavText: {
+    color: '#000',
+    fontFamily: fonts.CairoBold,
+  },
 });
 
 export default styles;

@@ -1,25 +1,24 @@
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, FlatList } from 'react-native';
 import React from 'react';
 import styles from './styles';
-import StackNames from '../../navigation/StackNames';
-import ScreenNames from '../../navigation/ScreenNames';
 import { useNavigation } from '@react-navigation/native';
+import { ArticleType } from '../../utils/types/articleType';
+import { useFavArticlesStore } from '../../store/useFavArticelStore';
+import ArticleCard from '../../components/ArticleCard/ArticleCard';
 
 export default function FavoriteArticles() {
   const { navigate } = useNavigation();
 
+  const { favList } = useFavArticlesStore();
+
+  function renderItem(item: ArticleType) {
+    return <ArticleCard item={item} />;
+  }
+
   return (
     <View style={styles.container}>
-      <Text>FavoriteArticles Sceen</Text>
-      <TouchableOpacity
-        onPress={() => {
-          navigate(StackNames.SharedStack, {
-            screen: ScreenNames.ArticleDetails,
-          });
-        }}
-      >
-        <Text>Go to Fav Screen</Text>
-      </TouchableOpacity>
+      <Text style={styles.title}>Favourit Articles</Text>
+      <FlatList data={favList} renderItem={({ item }) => renderItem(item)} />
     </View>
   );
 }

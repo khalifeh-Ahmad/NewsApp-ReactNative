@@ -6,6 +6,7 @@ import { MainstackParamList } from '../../navigation/MainStack';
 import ScreenNames from '../../navigation/ScreenNames';
 import styles from './styles';
 import Icon from 'react-native-vector-icons/AntDesign';
+import { useFavArticlesStore } from '../../store/useFavArticelStore';
 
 export default function ArticleDetails() {
   const { goBack } = useNavigation();
@@ -13,6 +14,7 @@ export default function ArticleDetails() {
     useRoute<RouteProp<MainstackParamList, ScreenNames.ArticleDetails>>();
   const { article } = params ?? {};
   const { content, title, urlToImage } = article ?? {};
+   const {addToFavList} = useFavArticlesStore();
   return (
     <SafeAreaView style={styles.safeContainer}>
       <ScrollView style={styles.container}>
@@ -27,6 +29,13 @@ export default function ArticleDetails() {
           <Text style={styles.description}>{content}</Text>
         </View>
       </ScrollView>
+       <TouchableOpacity
+        style={styles.addTofavBtn}
+        onPress={() => {
+          addToFavList(article);
+        }}>
+        <Text style={styles.addToFavText}>Add To Fav</Text>
+      </TouchableOpacity>
     </SafeAreaView>
   );
 }
