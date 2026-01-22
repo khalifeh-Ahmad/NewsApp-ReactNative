@@ -6,6 +6,7 @@ import {
   TextInput,
   KeyboardAvoidingView,
   Platform,
+  Alert,
 } from 'react-native';
 import React, { useState } from 'react';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
@@ -20,7 +21,11 @@ export default function LoginScreen() {
   const [password, setPassword] = useState('');
 
   const handleLogin = () => {
-    navigate(StackNames.MainTabs);
+    if (username === 'admin' && password === 'admin') {
+      navigate(StackNames.MainTabs);
+    } else {
+      Alert.alert('Invalid username or password');
+    }
   };
 
   return (

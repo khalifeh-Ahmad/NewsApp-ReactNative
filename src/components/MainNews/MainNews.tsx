@@ -13,6 +13,7 @@ import { NavigationProp, useNavigation } from '@react-navigation/native';
 import ScreenNames from '../../navigation/ScreenNames';
 import { MainstackParamList } from '../../navigation/MainStack';
 import { cleanHtml } from '../../utils/helpers/cleanHtml';
+import StackNames from '../../navigation/StackNames';
 
 export default function MainNews() {
   const [topNews, setTopNews] = useState<ArticleType[]>([]);
@@ -39,8 +40,11 @@ export default function MainNews() {
   }
 
   function articleDetails(article: ArticleType) {
-    navigate(ScreenNames.ArticleDetails, {
-      article,
+    navigate(StackNames.SharedStack, {
+      screen: ScreenNames.ArticleDetails,
+      params: {
+        article,
+      },
     });
   }
 
