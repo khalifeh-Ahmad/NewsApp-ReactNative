@@ -1,15 +1,17 @@
 import React from 'react';
-import { ScrollView } from 'react-native';
+import { ScrollView, StyleSheet } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import Header from '../../components/Header/Header';
 import MainNews from '../../components/MainNews/MainNews';
-//import styles from './styles';
 import TopNews from '../../components/TopNews/TopNews';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { useTheme } from '../../theme';
 
 const HomeScreen = () => {
+  const { colors } = useTheme();
+
   return (
-    <SafeAreaView>
-      <ScrollView>
+    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <Header />
         <MainNews />
         <TopNews />
@@ -17,5 +19,11 @@ const HomeScreen = () => {
     </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});
 
 export default HomeScreen;

@@ -1,11 +1,15 @@
 import { View, Text, FlatList, ActivityIndicator } from 'react-native';
 import React, { useEffect } from 'react';
-import styles from './styles';
 import { ArticleType } from '../../utils/types/articleType';
 import { useSavedArticlesStore } from '../../store/useSavedArticlesStore';
 import ArticleCard from '../../components/ArticleCard/ArticleCard';
+import { useTheme } from '../../theme';
+import { createStyles } from './styles';
 
 export default function SavedArticles() {
+  const { colors } = useTheme();
+  const styles = createStyles(colors);
+  
   const { savedArticles, isLoading, isInitialized, initializeStore } =
     useSavedArticlesStore();
 
@@ -22,7 +26,7 @@ export default function SavedArticles() {
     if (isLoading) {
       return (
         <View style={styles.emptyContainer}>
-          <ActivityIndicator size="large" color="#2f95dc" />
+          <ActivityIndicator size="large" color={colors.primary} />
           <Text style={styles.emptyText}>Loading saved articles...</Text>
         </View>
       );

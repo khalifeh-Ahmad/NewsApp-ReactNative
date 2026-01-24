@@ -10,13 +10,17 @@ import {
 } from 'react-native';
 import React, { useState } from 'react';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
-import styles from './styles';
 import StackNames from '../../navigation/StackNames';
 import { MainstackParamList } from '../../navigation/MainStack';
+import { useTheme } from '../../theme';
+import { createStyles } from './styles';
 
 export default function LoginScreen() {
   const { navigate } =
     useNavigation<NavigationProp<MainstackParamList, StackNames.AuthStack>>();
+  const { colors } = useTheme();
+  const styles = createStyles(colors);
+  
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -49,6 +53,7 @@ export default function LoginScreen() {
             <TextInput
               style={styles.input}
               placeholder="Enter your username"
+              placeholderTextColor={colors.placeholder}
               value={username}
               onChangeText={setUsername}
               autoCapitalize="none"
@@ -61,6 +66,7 @@ export default function LoginScreen() {
             <TextInput
               style={styles.input}
               placeholder="••••••••"
+              placeholderTextColor={colors.placeholder}
               value={password}
               onChangeText={setPassword}
               secureTextEntry
@@ -80,7 +86,7 @@ export default function LoginScreen() {
 
         {/* Sign Up Link */}
         <View style={styles.footer}>
-          <Text style={styles.footerText}>Don’t have an account? </Text>
+          <Text style={styles.footerText}>Don't have an account? </Text>
           <TouchableOpacity>
             <Text style={styles.linkText}>Sign up</Text>
           </TouchableOpacity>

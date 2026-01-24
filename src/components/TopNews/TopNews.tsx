@@ -1,15 +1,19 @@
 import { View, Text, Image, FlatList, TouchableOpacity } from 'react-native';
 import React, { useEffect, useState } from 'react';
-import styles from './styles';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { ArticleType } from '../../utils/types/articleType';
 import { getData } from '../../utils/helpers/apiService';
-import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { MainstackParamList } from '../../navigation/MainStack';
 import ScreenNames from '../../navigation/ScreenNames';
 import StackNames from '../../navigation/StackNames';
+import { useTheme } from '../../theme';
+import { createStyles } from './styles';
 
 export default function TopNews() {
   const [articles, setArticles] = useState<ArticleType[]>([]);
+  const { colors } = useTheme();
+  const styles = createStyles(colors);
+  
   const { navigate } =
     useNavigation<NavigationProp<MainstackParamList, ScreenNames.HomeScreen>>();
 
@@ -31,12 +35,14 @@ export default function TopNews() {
         console.log('error:', err);
       });
   }
+
   function articleDetails(article: ArticleType) {
     navigate(StackNames.SharedStack, {
       screen: ScreenNames.ArticleDetails,
       params: { article },
     });
   }
+
   function renderNews(item: ArticleType) {
     return (
       <TouchableOpacity
@@ -49,7 +55,9 @@ export default function TopNews() {
           source={{ uri: item.urlToImage }}
           resizeMode="cover"
         />
-        <Text style={styles.cardArticleName}>{item.title}</Text>
+        <Text style={styles.cardArticleName} numberOfLines={3}>
+          {item.title}
+        </Text>
       </TouchableOpacity>
     );
   }

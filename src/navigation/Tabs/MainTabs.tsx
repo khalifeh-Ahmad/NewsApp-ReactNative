@@ -1,15 +1,18 @@
 import { Platform } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import ScreenNames from '../ScreenNames';
 import FavoriteArticles from '../../screens/FavArticles/FavoriteArticles';
 import SavedArticles from '../../screens/SavedArticles/SavedArticles';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import StackNames from '../StackNames';
 import HomeStack from '../Stacks/Home.stack';
+import { useTheme } from '../../theme';
 
 const MyTabs = createBottomTabNavigator();
 
 export default function MainTabs() {
+  const { colors } = useTheme();
+
   return (
     <MyTabs.Navigator
       screenOptions={{
@@ -17,14 +20,14 @@ export default function MainTabs() {
         tabBarShowLabel: true,
         tabBarHideOnKeyboard: true,
 
-        //  Unified color theme
-        tabBarActiveTintColor: '#2f95dc',
-        tabBarInactiveTintColor: '#8e8e93',
+        // Theme-aware colors
+        tabBarActiveTintColor: colors.tabActive,
+        tabBarInactiveTintColor: colors.tabInactive,
 
         // Icon size
         tabBarIconStyle: { paddingTop: 6 },
 
-        // 📝 Label style
+        // Label style
         tabBarLabelStyle: {
           fontSize: 12,
           fontWeight: '600',
@@ -32,15 +35,14 @@ export default function MainTabs() {
           lineHeight: 16,
         },
 
-        // Tab bar style
+        // Tab bar style with theme colors
         tabBarStyle: {
           height: 60,
           paddingBottom: 6,
           paddingTop: 6,
-          backgroundColor: '#ffffff',
+          backgroundColor: colors.tabBar,
           borderTopWidth: 0.5,
-          borderTopColor: '#e0e0e0',
-          //  add shadow for depth (iOS)
+          borderTopColor: colors.tabBarBorder,
           ...Platform.select({
             ios: {
               shadowColor: '#000',

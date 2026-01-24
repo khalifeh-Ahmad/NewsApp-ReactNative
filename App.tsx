@@ -6,22 +6,48 @@
  */
 
 import { useEffect } from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import { StatusBar } from 'react-native';
+import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import MainStack from './src/navigation/MainStack';
 import { useSavedArticlesStore } from './src/store/useSavedArticlesStore';
+import { useThemeStore } from './src/theme';
 
 function App() {
-  const initializeStore = useSavedArticlesStore(state => state.initializeStore);
+  // Initialize stores on app startup
+  const initializeSavedArticles = useSavedArticlesStore(state => state.initializeStore);
+  const initializeTheme = useThemeStore(state => state.initializeTheme);
+  const isDark = useThemeStore(state => state.isDark);
+  const colors = useThemeStore(state => state.colors);
 
-  // Initialize saved articles store on app startup
   useEffect(() => {
-    initializeStore();
-  }, [initializeStore]);
+    initializeSavedArticles();
+    initializeTheme();
+  }, [initializeSavedArticles, initializeTheme]);
+
+  // Custom navigation themes that use our color palette
+  const navigationTheme = {
+    ...(isDark ? DarkTheme : DefaultTheme),
+    colors: {
+      ...(isDark ? DarkTheme.colors : DefaultTheme.colors),
+      primary: colors.primary,
+      background: colors.background,
+      card: colors.card,
+      text: colors.text,
+      border: colors.border,
+      notification: colors.primary,
+    },
+  };
 
   return (
-    <NavigationContainer>
-      <MainStack />
-    </NavigationContainer>
+    <>
+      <StatusBar
+        barStyle={isDark ? 'light-content' : 'dark-content'}
+        backgroundColor={colors.background}
+      />
+      <NavigationContainer theme={navigationTheme}>
+        <MainStack />
+      </NavigationContainer>
+    </>
   );
 }
 

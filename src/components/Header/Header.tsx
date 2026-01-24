@@ -1,11 +1,15 @@
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import React from 'react';
-import styles from './styles';
 import { useNavigation } from '@react-navigation/native';
 import ScreenNames from '../../navigation/ScreenNames';
+import { useTheme } from '../../theme';
+import { createStyles } from './styles';
 
 export default function Header() {
   const { navigate } = useNavigation();
+  const { colors } = useTheme();
+  const styles = createStyles(colors);
+
   function handleImgClick() {
     navigate(ScreenNames.SettingScreen);
   }

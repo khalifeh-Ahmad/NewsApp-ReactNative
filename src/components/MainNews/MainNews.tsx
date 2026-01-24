@@ -6,17 +6,20 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import React, { useEffect, useState } from 'react';
-import styles from './styles';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { ArticleType } from '../../utils/types/articleType';
 import { getData } from '../../utils/helpers/apiService';
-import { NavigationProp, useNavigation } from '@react-navigation/native';
 import ScreenNames from '../../navigation/ScreenNames';
 import { MainstackParamList } from '../../navigation/MainStack';
 import { cleanHtml } from '../../utils/helpers/cleanHtml';
 import StackNames from '../../navigation/StackNames';
+import { useTheme } from '../../theme';
+import { createStyles } from './styles';
 
 export default function MainNews() {
   const [topNews, setTopNews] = useState<ArticleType[]>([]);
+  const { colors, isDark } = useTheme();
+  const styles = createStyles(colors, isDark);
 
   const { navigate } =
     useNavigation<NavigationProp<MainstackParamList, ScreenNames.HomeScreen>>();

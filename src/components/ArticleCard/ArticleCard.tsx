@@ -1,18 +1,20 @@
 import { Text, TouchableOpacity, Image, View } from 'react-native';
 import React from 'react';
-
 import { useNavigation } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import ScreenNames from '../../navigation/ScreenNames';
 import StackNames from '../../navigation/StackNames';
-import styles from './styles';
 import { IProps } from './types';
 import { useSavedArticlesStore } from '../../store/useSavedArticlesStore';
+import { useTheme } from '../../theme';
+import { createStyles } from './styles';
 
 export default function ArticleCard({ item, showSaveButton = true }: IProps) {
   const { navigate } = useNavigation<any>();
-  const { isArticleSaved, toggleSaveArticle } = useSavedArticlesStore();
+  const { colors } = useTheme();
+  const styles = createStyles(colors);
   
+  const { isArticleSaved, toggleSaveArticle } = useSavedArticlesStore();
   const isSaved = isArticleSaved(item.url);
 
   function gotoArticleDetails() {
@@ -47,7 +49,7 @@ export default function ArticleCard({ item, showSaveButton = true }: IProps) {
             <Ionicons
               name={isSaved ? 'bookmark' : 'bookmark-outline'}
               size={20}
-              color={isSaved ? '#2f95dc' : '#8e8e93'}
+              color={isSaved ? colors.primary : colors.textMuted}
             />
           </TouchableOpacity>
         )}

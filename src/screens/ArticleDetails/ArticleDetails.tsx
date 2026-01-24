@@ -2,16 +2,20 @@ import { View, Text, TouchableOpacity, Image, ScrollView } from 'react-native';
 import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
-import { MainstackParamList } from '../../navigation/MainStack';
-import ScreenNames from '../../navigation/ScreenNames';
-import styles from './styles';
 import Icon from 'react-native-vector-icons/AntDesign';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { MainstackParamList } from '../../navigation/MainStack';
+import ScreenNames from '../../navigation/ScreenNames';
 import { useFavArticlesStore } from '../../store/useFavArticelStore';
 import { useSavedArticlesStore } from '../../store/useSavedArticlesStore';
+import { useTheme } from '../../theme';
+import { createStyles } from './styles';
 
 export default function ArticleDetails() {
   const { goBack } = useNavigation();
+  const { colors, isDark } = useTheme();
+  const styles = createStyles(colors);
+
   const { params } =
     useRoute<RouteProp<MainstackParamList, ScreenNames.ArticleDetails>>();
   const { article } = params ?? {};
@@ -38,7 +42,7 @@ export default function ArticleDetails() {
       <ScrollView style={styles.container}>
         <View style={styles.header}>
           <TouchableOpacity style={styles.backBtn} onPress={goBack}>
-            <Icon name="arrowleft" size={24} color="white" />
+            <Icon name="arrowleft" size={24} color="#fff" />
           </TouchableOpacity>
           <TouchableOpacity
             style={[styles.saveOfflineBtn, isSaved && styles.savedBtn]}
@@ -47,7 +51,7 @@ export default function ArticleDetails() {
             <Ionicons
               name={isSaved ? 'bookmark' : 'bookmark-outline'}
               size={20}
-              color={isSaved ? '#fff' : '#333'}
+              color={isSaved ? '#fff' : colors.text}
             />
             <Text style={[styles.saveOfflineText, isSaved && styles.savedText]}>
               {isSaved ? 'Saved' : 'Save Offline'}
