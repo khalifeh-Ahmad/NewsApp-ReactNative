@@ -1,6 +1,8 @@
+import { Platform } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import ScreenNames from '../ScreenNames';
 import FavoriteArticles from '../../screens/FavArticles/FavoriteArticles';
+import SavedArticles from '../../screens/SavedArticles/SavedArticles';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import StackNames from '../StackNames';
 import HomeStack from '../Stacks/Home.stack';
@@ -60,6 +62,16 @@ export default function MainTabs() {
           tabBarLabel: 'Home',
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="home" size={size} color={color} />
+          ),
+        }}
+      />
+      <MyTabs.Screen
+        name={ScreenNames.SavedScreen}
+        component={SavedArticles}
+        options={{
+          tabBarLabel: 'Saved',
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="bookmark" size={size} color={color} />
           ),
         }}
       />

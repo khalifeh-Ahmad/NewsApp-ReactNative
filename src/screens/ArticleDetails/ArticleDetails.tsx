@@ -6,7 +6,9 @@ import { MainstackParamList } from '../../navigation/MainStack';
 import ScreenNames from '../../navigation/ScreenNames';
 import styles from './styles';
 import Icon from 'react-native-vector-icons/AntDesign';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useFavArticlesStore } from '../../store/useFavArticelStore';
+import { useSavedArticlesStore } from '../../store/useSavedArticlesStore';
 
 export default function ArticleDetails() {
   const { goBack } = useNavigation();
@@ -14,18 +16,42 @@ export default function ArticleDetails() {
     useRoute<RouteProp<MainstackParamList, ScreenNames.ArticleDetails>>();
   const { article } = params ?? {};
   const { content, title, urlToImage } = article ?? {};
-  //const { addToFavList } = useFavArticlesStore();
 
+  // Favorites store
   const { favList, addToFavList } = useFavArticlesStore();
   const isFavorited = article?.url
     ? favList.some(a => a.url === article.url)
     : false;
+
+  // Saved articles store (offline)
+  const { isArticleSaved, toggleSaveArticle } = useSavedArticlesStore();
+  const isSaved = article?.url ? isArticleSaved(article.url) : false;
+
+  const handleSaveForOffline = () => {
+    if (article) {
+      toggleSaveArticle(article);
+    }
+  };
+
   return (
     <SafeAreaView style={styles.safeContainer}>
       <ScrollView style={styles.container}>
         <View style={styles.header}>
           <TouchableOpacity style={styles.backBtn} onPress={goBack}>
             <Icon name="arrowleft" size={24} color="white" />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.saveOfflineBtn, isSaved && styles.savedBtn]}
+            onPress={handleSaveForOffline}
+          >
+            <Ionicons
+              name={isSaved ? 'bookmark' : 'bookmark-outline'}
+              size={20}
+              color={isSaved ? '#fff' : '#333'}
+            />
+            <Text style={[styles.saveOfflineText, isSaved && styles.savedText]}>
+              {isSaved ? 'Saved' : 'Save Offline'}
+            </Text>
           </TouchableOpacity>
         </View>
         <Image source={{ uri: urlToImage }} style={styles.coverImg} />
@@ -37,13 +63,15 @@ export default function ArticleDetails() {
       <TouchableOpacity
         style={[
           styles.addTofavBtn,
-          isFavorited && styles.removeFavBtn, // optional different style
+          isFavorited && styles.removeFavBtn,
         ]}
         onPress={() => {
           if (article) addToFavList(article);
         }}
       >
-        <Text style={styles.addToFavText}>Add To Fav</Text>
+        <Text style={styles.addToFavText}>
+          {isFavorited ? 'Added to Favorites' : 'Add To Fav'}
+        </Text>
       </TouchableOpacity>
     </SafeAreaView>
   );

@@ -8,6 +8,9 @@ const styles = StyleSheet.create({
   },
   container: {},
   header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     paddingHorizontal: 16,
     paddingVertical: 10,
   },
@@ -16,6 +19,26 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
     padding: 10,
     borderRadius: 10,
+  },
+  saveOfflineBtn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#f0f0f0',
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderRadius: 20,
+    gap: 6,
+  },
+  savedBtn: {
+    backgroundColor: '#2f95dc',
+  },
+  saveOfflineText: {
+    fontSize: 13,
+    color: '#333',
+    fontFamily: fonts.CairoBold,
+  },
+  savedText: {
+    color: '#fff',
   },
   dataCont: {
     paddingHorizontal: 16,
