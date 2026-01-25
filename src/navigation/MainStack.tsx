@@ -14,8 +14,9 @@ export default function MainStack() {
         headerShown: false,
       }}
     >
-      <Stack.Screen name={StackNames.AuthStack} component={AuthStack} />
+      
       <Stack.Screen name={StackNames.MainTabs} component={MainTabs} />
+      <Stack.Screen name={StackNames.AuthStack} component={AuthStack} />
       <Stack.Screen name={StackNames.SharedStack} component={SharedStack} />
     </Stack.Navigator>
   );
@@ -24,5 +25,5 @@ export default function MainStack() {
 export type MainstackParamList = {
   [StackNames.AuthStack]: undefined;
   [StackNames.MainTabs]: undefined;
-  //[StackNames.SharedStack]: undefined;
+  [StackNames.SharedStack]: undefined;
 };

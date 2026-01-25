@@ -1,10 +1,11 @@
 import { View, Text, TouchableOpacity, SafeAreaView } from 'react-native';
 import React from 'react';
-import { useNavigation } from '@react-navigation/native';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import StackNames from '../../navigation/StackNames';
 import { useTheme, ThemeMode } from '../../theme';
 import { createStyles } from './styles';
+import { MainstackParamList } from '../../navigation/MainStack';
 
 // Theme options configuration
 const themeOptions: { mode: ThemeMode; label: string; icon: string }[] = [
@@ -17,7 +18,9 @@ export default function SettingScreen() {
   const { reset } = useNavigation();
   const { colors, themeMode, setThemeMode } = useTheme();
   const styles = createStyles(colors);
-
+  const navigation = useNavigation<NavigationProp<MainstackParamList>>();
+  const isLoggedIn = false;
+  
   function handleLogout() {
     reset({
       index: 0,

@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import {
   ActivityIndicator,
   FlatList,
+  RefreshControl,
+  ScrollView,
   Text,
   TextInput,
   TouchableOpacity,
@@ -20,51 +22,74 @@ const HomeScreen = () => {
   const { colors } = useTheme();
   const { query, setQuery, results, loading } = useSearchNews();
   const [isSearching, setIsSearching] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+    // TODO: Trigger MainNews & TopNews to refetch
+    setTimeout(() => setRefreshing(false), 1000); // Temporary
+  };
 
   useEffect(() => {
     setIsSearching(query.trim().length > 0);
   }, [query]);
 
-
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
-    {/* 🔍 Search Bar */}
-    <View style={[styles.searchContainer, { backgroundColor: colors.card }]}>
-      <TextInput
-        style={[styles.searchInput, { color: colors.text }]}
-        placeholder="Search news..."
-        placeholderTextColor={colors.text + '80'}
-        value={query}
-        onChangeText={setQuery}
-      />
-      {query ? (
-        <TouchableOpacity onPress={() => setQuery('')}>
-          <Text style={{ color: colors.text }}>✕</Text>
-        </TouchableOpacity>
-      ) : null}
-    </View>
-
-    {isSearching ? (
-      //  Show search results using your existing ArticleCard
-      loading ? (
-        <ActivityIndicator size="small" color={colors.primary} style={styles.loader} />
-      ) : (
-        <FlatList
-          data={results}
-          renderItem={({ item }) => <ArticleCard item={item} showSaveButton={true} />}
-          keyExtractor={(item) => item.url!}
-          contentContainerStyle={styles.listContainer}
-          showsVerticalScrollIndicator={false}
+    <SafeAreaView
+      style={[styles.container, { backgroundColor: colors.background }]}
+    >
+      {/* 🔍 Search Bar */}
+      <View style={[styles.searchContainer, { backgroundColor: colors.card }]}>
+        <TextInput
+          style={[styles.searchInput, { color: colors.text }]}
+          placeholder="Search news..."
+          placeholderTextColor={colors.text + '80'}
+          value={query}
+          onChangeText={setQuery}
         />
-      )
-    ) : (
-      <View style={styles.scrollViewContent}>
-        <Header />
-        <MainNews />
-        <TopNews />
+        {query ? (
+          <TouchableOpacity onPress={() => setQuery('')}>
+            <Text style={{ color: colors.text }}>✕</Text>
+          </TouchableOpacity>
+        ) : null}
       </View>
-    )}
-  </SafeAreaView>
+
+      {isSearching ? (
+        //  Show search results using your existing ArticleCard
+        loading ? (
+          <ActivityIndicator
+            size="small"
+            color={colors.primary}
+            style={styles.loader}
+          />
+        ) : (
+          <FlatList
+            data={results}
+            renderItem={({ item }) => (
+              <ArticleCard item={item} showSaveButton={true} />
+            )}
+            keyExtractor={item => item.url!}
+            contentContainerStyle={styles.listContainer}
+            showsVerticalScrollIndicator={false}
+          />
+        )
+      ) : (
+        <ScrollView
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={onRefresh}
+              colors={[colors.primary]}
+            />
+          }
+          showsVerticalScrollIndicator={false}
+        >
+          <Header />
+          <MainNews key={`main-${refreshing}`} />
+          <TopNews key={`top-${refreshing}`} />
+        </ScrollView>
+      )}
+    </SafeAreaView>
   );
 };
 
