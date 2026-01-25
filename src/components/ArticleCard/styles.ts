@@ -35,4 +35,10 @@ export const createStyles = (colors: ThemeColors) =>
       padding: 4,
       marginLeft: 8,
     },
+    readTime: {
+      fontSize: 12,
+      color: colors.textMuted,
+      marginTop: 4,
+      
+    },
   });

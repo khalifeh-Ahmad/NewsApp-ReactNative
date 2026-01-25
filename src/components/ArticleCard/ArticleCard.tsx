@@ -8,12 +8,16 @@ import { IProps } from './types';
 import { useSavedArticlesStore } from '../../store/useSavedArticlesStore';
 import { useTheme } from '../../theme';
 import { createStyles } from './styles';
+import { getReadTime } from '../../utils/helpers/readTime';
 
 export default function ArticleCard({ item, showSaveButton = true }: IProps) {
   const { navigate } = useNavigation<any>();
   const { colors } = useTheme();
   const styles = createStyles(colors);
   
+  const readTime = getReadTime(item.content || item.description || '');
+
+
   const { isArticleSaved, toggleSaveArticle } = useSavedArticlesStore();
   const isSaved = isArticleSaved(item.url);
 
@@ -40,6 +44,7 @@ export default function ArticleCard({ item, showSaveButton = true }: IProps) {
         <Text style={styles.cardArticleName} numberOfLines={3}>
           {item.title}
         </Text>
+        <Text style={styles.readTime}>{readTime} min read</Text>
         {showSaveButton && (
           <TouchableOpacity
             style={styles.saveButton}
