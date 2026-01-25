@@ -1,4 +1,11 @@
-import { View, Text, TouchableOpacity, Image, ScrollView } from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  ScrollView,
+  Share,
+} from 'react-native';
 import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
@@ -36,6 +43,20 @@ export default function ArticleDetails() {
       toggleSaveArticle(article);
     }
   };
+  // share article
+  const handleShare = async () => {
+    if (!article?.title || !article?.url) return;
+
+    try {
+      await Share.share({
+        message: `${article.title}\n\n${article.url}`,
+        url: article.url,
+        title: article.title,
+      });
+    } catch (error) {
+      console.error('Error sharing article:', error);
+    }
+  };
 
   return (
     <SafeAreaView style={styles.safeContainer}>
@@ -44,6 +65,14 @@ export default function ArticleDetails() {
           <TouchableOpacity style={styles.backBtn} onPress={goBack}>
             <Icon name="arrowleft" size={24} color="#fff" />
           </TouchableOpacity>
+
+          {/* Share Button */}
+          <TouchableOpacity style={styles.shareBtn} onPress={handleShare}>
+            <Ionicons name="share-social" size={22} color="#fff" />
+          </TouchableOpacity>
+
+          
+          {/* Save Offline Button */}
           <TouchableOpacity
             style={[styles.saveOfflineBtn, isSaved && styles.savedBtn]}
             onPress={handleSaveForOffline}
@@ -65,10 +94,7 @@ export default function ArticleDetails() {
         </View>
       </ScrollView>
       <TouchableOpacity
-        style={[
-          styles.addTofavBtn,
-          isFavorited && styles.removeFavBtn,
-        ]}
+        style={[styles.addTofavBtn, isFavorited && styles.removeFavBtn]}
         onPress={() => {
           if (article) addToFavList(article);
         }}

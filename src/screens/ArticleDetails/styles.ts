@@ -82,4 +82,11 @@ export const createStyles = (colors: ThemeColors) =>
     removeFavBtn: {
       backgroundColor: colors.surface,
     },
+    shareBtn: {
+      backgroundColor: 'rgba(0, 0, 0, 0.3)',
+      padding: 8,
+      borderRadius: 20,
+      alignSelf: 'center',
+    },
+    
   });
